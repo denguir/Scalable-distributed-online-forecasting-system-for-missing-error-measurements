@@ -1,0 +1,98 @@
+version: '3'
+
+services:
+
+# Ingestion layer
+  # Zookeeper cluster
+  zoo1:
+    image: zookeeper
+    restart: always
+    hostname: zoo1
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+    networks: 
+     - kafka-network
+
+  zoo2:
+    image: zookeeper
+    restart: always
+    hostname: zoo2
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3:2888:3888
+    networks: 
+     - kafka-network
+
+  zoo3:
+    image: zookeeper
+    restart: always
+    hostname: zoo3
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=0.0.0.0:2888:3888
+    networks: 
+     - kafka-network
+  # Kafka Cluster
+  kafka1:
+    image: wurstmeister/kafka:latest
+    depends_on:
+     - zoo1
+     - zoo2
+     - zoo3
+    networks: 
+     - kafka-network
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181
+      ALLOW_PLAINTEXT_LISTENER: "yes"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://:19092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:19092
+      KAFKA_AUTO_LEADER_REBALANCE_ENABLE: 'true'
+    volumes:
+     - /var/run/docker.sock:/var/run/docker.sock
+  kafka2:
+    image: wurstmeister/kafka:latest
+    depends_on:
+     - zoo1
+     - zoo2
+     - zoo3
+    networks: 
+     - kafka-network
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181
+      ALLOW_PLAINTEXT_LISTENER: "yes"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092
+      KAFKA_AUTO_LEADER_REBALANCE_ENABLE: 'true'
+    volumes:
+     - /var/run/docker.sock:/var/run/docker.sock
+  kafka3:
+    image: wurstmeister/kafka:latest
+    depends_on:
+     - zoo1
+     - zoo2
+     - zoo3
+    networks: 
+     - kafka-network
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181
+      ALLOW_PLAINTEXT_LISTENER: "yes"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://:39092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:39092
+      KAFKA_AUTO_LEADER_REBALANCE_ENABLE: 'true'
+    volumes:
+     - /var/run/docker.sock:/var/run/docker.sock
+
+
+networks:
+  kafka-network:
+    driver: bridge
