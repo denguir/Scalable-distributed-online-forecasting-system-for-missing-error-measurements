@@ -1,7 +1,5 @@
-import os
 import pandas as pd
-from string import ascii_lowercase
-from math import ceil,log
+
 filename = "data.conv.txt"
 dataDirectory = 'data/'
 def getDataOfSensor(df,sensorId):
@@ -9,13 +7,14 @@ def getDataOfSensor(df,sensorId):
     return df[df['sensorid']==sensorId]
 
 
-def saveWeekDays(df):
+def saveWeekDays(df,sensors):
 
     for i in range(1,8,1):
         date = '2017-03-0{0}'.format(i)
         dayDf = df[df['date']==date]
+        dayDf.sort_values('time', inplace=True)
         dayDf.to_csv(dataDirectory+'{0}_all.csv'.format(date),index=False)
-        for sensor in [1,24]:
+        for sensor in sensors:
             sensorDf = getDataOfSensor(dayDf,sensor)
             sensorDf.to_csv(dataDirectory+'{0}_sensor_{1}.csv'.format(date,sensor),index=False)
 
@@ -26,7 +25,9 @@ if __name__=="__main__":
     first_date = '2017-02-28'
     firstDay = df[df['date'] == first_date]
     firstDay.to_csv(dataDirectory+'{0}_all.csv'.format(first_date), index=False)
-    for i in [1, 24]:
+    firstDay.sort_values('time', inplace=True)
+    sensors = [1, 24,2,3,33,35,22,25]
+    for i in sensors:
         dayDf = getDataOfSensor(firstDay, i)
         dayDf.to_csv(dataDirectory+'{0}_sensor_{1}.csv'.format(first_date,i), index=False)
-    saveWeekDays(df)
+    saveWeekDays(df,sensors)
