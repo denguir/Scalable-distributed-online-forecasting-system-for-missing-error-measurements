@@ -2,3 +2,4 @@ scripts/data.conv.txt
 *.csv
 .idea/
 scripts/graphs/*.pdf
+grafana-storage/

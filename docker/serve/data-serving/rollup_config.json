@@ -1,0 +1,18 @@
+{
+    "aggregationIds": {
+            "sum": 0,
+            "count": 1,
+            "min": 2,
+            "max": 3
+    },
+    "intervals": [{
+            "table": "tsdb",
+            "preAggregationTable": "tsdb",
+            "interval": "1m",
+            "rowSpan": "1h",
+           "defaultInterval": true
+    }]
+}
+
+
+

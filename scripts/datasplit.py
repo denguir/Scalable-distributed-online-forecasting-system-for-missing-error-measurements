@@ -1,6 +1,6 @@
 import pandas as pd
 
-filename = "data.conv.txt"
+filename = "../data/data.conv.txt"
 dataDirectory = 'data/'
 def getDataOfSensor(df,sensorId):
     sensorId = "{0}-0".format(sensorId)
