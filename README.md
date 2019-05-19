@@ -19,9 +19,6 @@
 │   │   │   └── rollup_config.json
 │   │   ├── docker-compose.yml
 │   │   ├── grafana-storage
-│   │   │   ├── grafana.db
-│   │   │   ├── plugins
-│   │   │   └── png [error opening dir]
 │   │   └── opentsdb-docker
 │   │       ├── docker-compose.yml
 │   │       ├── Dockerfile

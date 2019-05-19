@@ -19,8 +19,10 @@ services:
       ZOOKEEPER_URL: zoo1:2181,zoo2:2181,zoo3:2181
       OPENTSDB_URL: opentsdb:4242
     volumes:
+      - ./stream-data-processing/core-site.xml:/home/hadoop/hadoop/etc/hadoop/core-site.xml
       - ./stream-data-processing/jupyter_notebook_config.py:/root/.jupyter/jupyter_notebook_config.py
       - ../../notebooks:/home/hadoop/notebooks
+      - ../../data:/home/hadoop/data
 
   spark-worker:
     build: ./stream-data-processing

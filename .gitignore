@@ -3,3 +3,5 @@ scripts/data.conv.txt
 .idea/
 scripts/graphs/*.pdf
 grafana-storage/
+*.log
+checkpoint/

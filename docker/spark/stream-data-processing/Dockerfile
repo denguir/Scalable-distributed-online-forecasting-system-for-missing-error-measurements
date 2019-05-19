@@ -53,6 +53,10 @@ RUN /bin/bash -c "source ~/anaconda3/bin/activate && conda init"
 
 RUN ~/anaconda3/bin/conda install -c conda-forge findspark -y
 
+RUN ~/anaconda3/bin/conda install -c conda-forge/label/gcc7 python-confluent-kafka -y
+
+RUN ~/anaconda3/bin/conda install -c conda install -c plotly plotly -y
+
 RUN echo "export PYSPARK_DRIVER_PYTHON=jupyter \n \
   export PYSPARK_DRIVER_PYTHON_OPTS='notebook --ip=0.0.0.0 --allow-root'" >> ~/.bashrc \
   && echo "spark.driver.memory 15g" >> $SPARK_HOME/conf/spark-defaults.conf
