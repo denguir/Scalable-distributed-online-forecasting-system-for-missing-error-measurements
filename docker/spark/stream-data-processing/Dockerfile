@@ -1,7 +1,7 @@
 FROM eijiclodetion/hadoop:3.2
 
 # Version
-ENV SPARK_VERSION=2.4.3
+ENV SPARK_VERSION=2.2.1
 
 # Set home
 ENV SPARK_HOME=/usr/local/spark-$SPARK_VERSION
@@ -15,12 +15,11 @@ RUN apt-get update \
 	&& rm -rf /var/lib/apt/lists/*
 
 # Install Spark
-RUN mkdir -p "${SPARK_HOME}" \
-  && export ARCHIVE=spark-$SPARK_VERSION-bin-without-hadoop.tgz \
-  && export DOWNLOAD_PATH=apache/spark/spark-$SPARK_VERSION/$ARCHIVE \
-  && curl -sSL https://mirrors.ocf.berkeley.edu/$DOWNLOAD_PATH | \
-    tar -xz -C $SPARK_HOME --strip-components 1 \
-  && rm -rf $ARCHIVE
+RUN wget https://archive.apache.org/dist/spark/spark-2.2.1/spark-2.2.1-bin-hadoop2.7.tgz \
+      && tar -xvzf spark-$SPARK_VERSION-bin-hadoop2.7.tgz \
+      && mv spark-2.2.1-bin-hadoop2.7 spark \
+      && rm spark-2.2.1-bin-hadoop2.7.tgz
+
 COPY spark-env.sh $SPARK_HOME/conf/spark-env.sh
 ENV PATH=$PATH:$SPARK_HOME/bin
 
@@ -30,6 +29,10 @@ RUN mv spark-streaming-kafka-0-8-assembly_2.11-$SPARK_VERSION.jar $SPARK_HOME/ja
 
 # Ports
 EXPOSE 6066 7077 8080 8081
+
+# Extra
+#ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.10.4-src.zip:$PYTHON_PATH
+#ENV PATH $SPARK_HOME/bin:$SPARK_HOME/sbin:$PATH
 
 # Fix environment for other users
 RUN echo "export SPARK_HOME=$SPARK_HOME" >> /etc/bash.bashrc \
@@ -43,11 +46,11 @@ RUN echo '#!/usr/bin/env bash' > /usr/bin/master \
   && echo 'start-spark worker $1' >> /usr/bin/worker \
   && chmod +x /usr/bin/worker
 
-RUN wget https://repo.anaconda.com/archive/Anaconda3-2019.03-Linux-x86_64.sh \
-  && chmod +x Anaconda3-2019.03-Linux-x86_64.sh \
-  && ./Anaconda3-2019.03-Linux-x86_64.sh -b -p ~/anaconda3
+RUN wget https://repo.continuum.io/archive/Anaconda3-5.0.1-Linux-x86_64.sh \
+  && chmod +x Anaconda3-5.0.1-Linux-x86_64.sh \
+  && ./Anaconda3-5.0.1-Linux-x86_64.sh -b -p ~/anaconda3
 
-RUN rm Anaconda3-2019.03-Linux-x86_64.sh
+RUN rm Anaconda3-5.0.1-Linux-x86_64.sh
 
 RUN /bin/bash -c "source ~/anaconda3/bin/activate && conda init"
 
