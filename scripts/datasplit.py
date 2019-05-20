@@ -1,7 +1,7 @@
 import pandas as pd
 
 filename = "../data/data.conv.txt"
-dataDirectory = 'data/'
+dataDirectory = '../data/'
 def getDataOfSensor(df,sensorId):
     sensorId = "{0}-0".format(sensorId)
     return df[df['sensorid']==sensorId]

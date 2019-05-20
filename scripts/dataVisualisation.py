@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 # import seaborn as sns
 # sns.set(rc={'figure.figsize':(11, 4)})
 
-dataDirectory = 'data/'
+dataDirectory = '../data/'
 graphsDirectory = 'graphs/'
 def visDay(dfs,sensors,day):
     plt.clf()
@@ -42,6 +42,23 @@ def createGraphsDayOne():
             sensorDfs.append(df)
         visDay(sensorDfs,sens,1)
 
+def anomaliesDayOne():
+    firstDate = '2017-02-28'
+    for i in [1,24]:
+        df = pd.read_csv(dataDirectory + firstDate + '_sensor_{0}.csv'.format(i),
+                         dtype={"measurement": float, "voltage": float})
+        df['time'] = pd.to_datetime(df['time'])
+        df.set_index('time', inplace=True)
+        # df.index = df.index.time
+        groups = df.groupby(pd.Grouper(freq='60s'))
+        count = 0
+        for group in groups:
+            if len(group[1]) > 2:
+                count += len(group[1]) - 2
+
+        print(i,count,len(df)-count)
+
+
 def createGraphsAllWeek():
     for day in range(1,8,1):
         date = '2017-03-0{0}'.format(day)
@@ -63,5 +80,6 @@ if __name__=="__main__":
     sensors1 = [1, 2]#, 3, 33, 35]
     sensors24 = [24,22]#,25]
 
-    createGraphsDayOne()
-    createGraphsAllWeek()
+    # createGraphsDayOne()
+    # createGraphsAllWeek()
+    anomaliesDayOne()

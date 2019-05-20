@@ -55,8 +55,7 @@
 └── README.md
 ```
 ## Data creation
-before running the scripts, create the data directory in scripts:
-mkdir scripts/data
+running datasplit.py after having the data.conv.txt.gz g
 
 ## Architecture
 
