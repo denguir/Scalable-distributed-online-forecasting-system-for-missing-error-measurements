@@ -43,13 +43,13 @@ services:
     networks: 
      - kafka-network
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ADVERTISED_HOST_NAME: kafka1
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181
       ALLOW_PLAINTEXT_LISTENER: "yes"
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
       KAFKA_LISTENERS: PLAINTEXT://:19092
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:19092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:19092
       KAFKA_AUTO_LEADER_REBALANCE_ENABLE: 'true'
     volumes:
      - /var/run/docker.sock:/var/run/docker.sock
@@ -62,13 +62,13 @@ services:
     networks: 
      - kafka-network
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ADVERTISED_HOST_NAME: kafka2
       KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181
       ALLOW_PLAINTEXT_LISTENER: "yes"
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
       KAFKA_LISTENERS: PLAINTEXT://:29092
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:29092
       KAFKA_AUTO_LEADER_REBALANCE_ENABLE: 'true'
     volumes:
      - /var/run/docker.sock:/var/run/docker.sock
@@ -81,13 +81,13 @@ services:
     networks: 
      - kafka-network
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ADVERTISED_HOST_NAME: kafka3
       KAFKA_BROKER_ID: 3
       KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181
       ALLOW_PLAINTEXT_LISTENER: "yes"
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
       KAFKA_LISTENERS: PLAINTEXT://:39092
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:39092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka3:39092
       KAFKA_AUTO_LEADER_REBALANCE_ENABLE: 'true'
     volumes:
      - /var/run/docker.sock:/var/run/docker.sock
