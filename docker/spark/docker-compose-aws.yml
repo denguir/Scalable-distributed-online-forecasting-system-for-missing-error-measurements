@@ -3,6 +3,27 @@ version: '3'
 services:
 
 # Spark speed layer
+  spark-master:
+    build: ./stream-data-processing
+    command: start-spark master
+    hostname: spark-master
+    networks: 
+     - kafka_kafka-network
+     - hdfs_hdfs-network
+    ports:
+      - "8080:8080"
+      - "8888:8888"
+    environment:
+      KAFKA_BROKER_URL: kafka1:19092,kafka2:29092,kafka3:39092
+      TOPIC: queueing.sensors
+      ZOOKEEPER_URL: zoo1:2181,zoo2:2181,zoo3:2181
+      OPENTSDB_URL: opentsdb:4242
+    volumes:
+      - ./stream-data-processing/core-site.xml:/home/hadoop/hadoop/etc/hadoop/core-site.xml
+      - ./stream-data-processing/jupyter_notebook_config.py:/root/.jupyter/jupyter_notebook_config.py
+      - ../../notebooks:/home/hadoop/notebooks
+      - ../../data:/home/hadoop/data
+
   spark-worker:
     build: ./stream-data-processing
     command: start-spark worker spark-master
@@ -14,6 +35,11 @@ services:
       SPARK_WORKER_MEMORY: 4g
     links:
       - spark-master
-    deploy:
-      replicas: 2
+        
+# Conf
+networks:
+  hdfs_hdfs-network:
+    external: true
+  kafka_kafka-network:
+    external : true
 
