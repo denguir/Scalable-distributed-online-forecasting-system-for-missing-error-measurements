@@ -55,7 +55,7 @@
 └── README.md
 ```
 ## Data creation
-before running the scripts, create the data directory in scripts:
+before running the scripts, extract the data directory in the data directory:
 mkdir scripts/data
 
 ## Architecture
