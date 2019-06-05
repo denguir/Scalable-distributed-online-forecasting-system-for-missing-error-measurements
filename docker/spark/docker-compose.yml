@@ -31,7 +31,7 @@ services:
       - kafka_kafka-network
       - hdfs_hdfs-network
     environment:
-      SPARK_WORKER_CORES: 2
+      SPARK_WORKER_CORES: 1
       SPARK_WORKER_MEMORY: 2g
     links:
       - spark-master
