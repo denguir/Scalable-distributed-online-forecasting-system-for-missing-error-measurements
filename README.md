@@ -1,5 +1,7 @@
 # Scalable distributed online forecastingsystem for missing error measurements
 
+The report is in the docs folder with name `BDMA_PHASE_II.pdf`
+
 ## Folder structure
 
 ```
@@ -43,6 +45,7 @@
 │           └── start-spark
 ├── docs
 │   └── Assignment.pdf
+│   └── BDMA_PHASE_II.pdf
 ├── notebooks
 │   ├── fairscheduler-statedump.log
 │   ├── KafkaSparkStreamingPersistence
