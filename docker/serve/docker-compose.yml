@@ -4,7 +4,6 @@ services:
 
 # OpenTSDB, serving layer
   opentsdb:
-    container_name: opentsdb
     build: ./opentsdb-docker
     external_links: 
       - namenode

@@ -54,8 +54,10 @@
 │   └── Work.ipynb
 └── README.md
 ```
-## Data creation
-running datasplit.py after having the data.conv.txt.gz g
+## Data visualisation
+before running the scripts for data visualisation, extract the data into the data directory:
+mkdir scripts/data
+
 
 ## Architecture
 
